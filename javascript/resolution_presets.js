@@ -180,8 +180,8 @@ function loadSavedPresets() {
         if (savedPresets) {
             const presets = JSON.parse(savedPresets);
             
-            // Limit to most recent 10 presets
-            const recentPresets = presets.slice(-10);
+            // Limit to most recent 8 presets
+            const recentPresets = presets.slice(-8);
             
             // If we had to trim, update localStorage
             if (recentPresets.length < presets.length) {
