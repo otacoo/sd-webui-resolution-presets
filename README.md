@@ -14,7 +14,14 @@ A very simple extension for Stable Diffusion WebUI that adds buttons to save and
 - Click a preset button to instantly apply that resolution
 - Presets are saved in your browser's localStorage
 
-## Installation
+## SD WebUI Installation
+
+1. Go into `Extensions` tab > `Install from URL`
+2. Paste `https://github.com/otacoo/sd-webui-resolution-presets.git`
+3. Press Install
+4. Apply and Restart the UI
+
+## Manual Installation
 
 1. Clone this repository into your SD WebUI `extensions` folder:
 
