@@ -9,7 +9,7 @@ A very simple extension for Stable Diffusion WebUI that adds buttons to save and
 ## Features
 
 - Save the current resolution as a preset with a single click
-- Automatically saves up to 10 most recent presets
+- Automatically **saves up to 10** most recent presets
 - Presets are displayed as buttons below the width/height sliders
 - Click a preset button to instantly apply that resolution
 - Presets are saved in your browser's localStorage
