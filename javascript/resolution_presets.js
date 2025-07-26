@@ -1,13 +1,13 @@
-function gradioApp() {
+function getResPresets() {
     return document.querySelector('gradio-app')?.shadowRoot || document;
 }
 
 function injectStyledSaveButton() {
-    const switchBtn = gradioApp().getElementById("txt2img_res_switch_btn");
+    const switchBtn = getResPresets().getElementById("txt2img_res_switch_btn");
     if (!switchBtn) return;
 
     // Avoid duplicate
-    if (gradioApp().getElementById("txt2img_save_res_preset_btn")) return;
+    if (getResPresets().getElementById("txt2img_save_res_preset_btn")) return;
 
     // Clone the switch button to get all Svelte/Gradio classes
     const saveBtn = switchBtn.cloneNode(true);
@@ -22,9 +22,9 @@ function injectStyledSaveButton() {
         console.log("Save button clicked!");
 
         // Get width input
-        const widthInput = gradioApp().querySelector('#txt2img_width input[data-testid="number-input"]');
+        const widthInput = getResPresets().querySelector('#txt2img_width input[data-testid="number-input"]');
         // Get height input
-        const heightInput = gradioApp().querySelector('#txt2img_height input[data-testid="number-input"]');
+        const heightInput = getResPresets().querySelector('#txt2img_height input[data-testid="number-input"]');
 
         console.log("Width input:", widthInput);
         console.log("Height input:", heightInput);
@@ -75,7 +75,7 @@ function saveResolutionPreset(width, height) {
             // Also remove the oldest button from the UI
             if (oldestPreset) {
                 const oldestPresetId = `preset_${oldestPreset.width}x${oldestPreset.height}`;
-                const oldestButton = gradioApp().getElementById(oldestPresetId);
+                const oldestButton = getResPresets().getElementById(oldestPresetId);
                 if (oldestButton) {
                     oldestButton.remove();
                 }
@@ -96,7 +96,7 @@ function saveResolutionPreset(width, height) {
 // Function to add a preset button to the UI
 function addPresetButton(width, height) {
     // Find or create the container for preset buttons
-    let container = gradioApp().getElementById("txt2img_resolution_presets_container");
+    let container = getResPresets().getElementById("txt2img_resolution_presets_container");
     
     if (!container) {
         // Create container if it doesn't exist
@@ -111,7 +111,7 @@ function addPresetButton(width, height) {
         container.style.width = "100%";
         
         // Find a good place to insert it - after the row with width/height sliders
-        const row = gradioApp().querySelector("#txt2img_column_size")?.closest(".gradio-row");
+        const row = getResPresets().querySelector("#txt2img_column_size")?.closest(".gradio-row");
         if (row) {
             row.parentNode.insertBefore(container, row.nextSibling);
         } else {
@@ -123,12 +123,12 @@ function addPresetButton(width, height) {
     
     // Check if this preset button already exists
     const buttonId = `preset_${width}x${height}`;
-    if (gradioApp().getElementById(buttonId)) {
+    if (getResPresets().getElementById(buttonId)) {
         return; // Button already exists
     }
     
     // Find an existing Svelte button to clone its style
-    const templateBtn = gradioApp().querySelector(".gradio-button.tool.svelte-cmf5ev");
+    const templateBtn = getResPresets().querySelector(".gradio-button.tool.svelte-cmf5ev");
     
     // Create the preset button
     const btn = document.createElement("button");
@@ -156,8 +156,8 @@ function addPresetButton(width, height) {
     
     // Add click handler to apply this resolution
     btn.onclick = function() {
-        const widthInput = gradioApp().querySelector('#txt2img_width input[data-testid="number-input"]');
-        const heightInput = gradioApp().querySelector('#txt2img_height input[data-testid="number-input"]');
+        const widthInput = getResPresets().querySelector('#txt2img_width input[data-testid="number-input"]');
+        const heightInput = getResPresets().querySelector('#txt2img_height input[data-testid="number-input"]');
         
         if (widthInput && heightInput) {
             widthInput.value = width;
@@ -189,7 +189,7 @@ function loadSavedPresets() {
             }
             
             // Check if we can add buttons now
-            const columnSize = gradioApp().querySelector("#txt2img_column_size");
+            const columnSize = getResPresets().querySelector("#txt2img_column_size");
             if (!columnSize) {
                 // We're probably not on the txt2img tab, so don't try to add buttons yet
                 console.log("Not on txt2img tab, will add preset buttons when tab is active");
@@ -211,7 +211,7 @@ function safeInitialize() {
         injectStyledSaveButton();
         
         // Only try to load presets if we're on the txt2img tab
-        if (gradioApp().querySelector("#txt2img_column_size")) {
+        if (getResPresets().querySelector("#txt2img_column_size")) {
             loadSavedPresets();
         }
     } catch (e) {
